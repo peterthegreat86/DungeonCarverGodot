@@ -1,0 +1,17 @@
+C:\USERS\PETER\DOCUMENTS\DUNGEONCARVER\.godot\mono\temp\obj\Debug\DungeonCarver.Godot.csproj.AssemblyReference.cache
+C:\USERS\PETER\DOCUMENTS\DUNGEONCARVER\.godot\mono\temp\obj\Debug\DungeonCarver.Godot.GeneratedMSBuildEditorConfig.editorconfig
+C:\USERS\PETER\DOCUMENTS\DUNGEONCARVER\.godot\mono\temp\obj\Debug\DungeonCarver.Godot.AssemblyInfoInputs.cache
+C:\USERS\PETER\DOCUMENTS\DUNGEONCARVER\.godot\mono\temp\obj\Debug\DungeonCarver.Godot.AssemblyInfo.cs
+C:\USERS\PETER\DOCUMENTS\DUNGEONCARVER\.godot\mono\temp\obj\Debug\DungeonCarver.Godot.csproj.CoreCompileInputs.cache
+C:\USERS\PETER\DOCUMENTS\DUNGEONCARVER\.godot\mono\temp\bin\Debug\DungeonCarver.Godot.deps.json
+C:\USERS\PETER\DOCUMENTS\DUNGEONCARVER\.godot\mono\temp\bin\Debug\DungeonCarver.Godot.runtimeconfig.json
+C:\USERS\PETER\DOCUMENTS\DUNGEONCARVER\.godot\mono\temp\bin\Debug\DungeonCarver.Godot.dll
+C:\USERS\PETER\DOCUMENTS\DUNGEONCARVER\.godot\mono\temp\bin\Debug\DungeonCarver.Godot.pdb
+C:\USERS\PETER\DOCUMENTS\DUNGEONCARVER\.godot\mono\temp\bin\Debug\GodotSharp.dll
+C:\USERS\PETER\DOCUMENTS\DUNGEONCARVER\.godot\mono\temp\bin\Debug\GodotSharpEditor.dll
+C:\USERS\PETER\DOCUMENTS\DUNGEONCARVER\.godot\mono\temp\obj\Debug\DungeonC.02D75411.Up2Date
+C:\USERS\PETER\DOCUMENTS\DUNGEONCARVER\.godot\mono\temp\obj\Debug\DungeonCarver.Godot.dll
+C:\USERS\PETER\DOCUMENTS\DUNGEONCARVER\.godot\mono\temp\obj\Debug\refint\DungeonCarver.Godot.dll
+C:\USERS\PETER\DOCUMENTS\DUNGEONCARVER\.godot\mono\temp\obj\Debug\DungeonCarver.Godot.pdb
+C:\USERS\PETER\DOCUMENTS\DUNGEONCARVER\.godot\mono\temp\obj\Debug\DungeonCarver.Godot.genruntimeconfig.cache
+C:\USERS\PETER\DOCUMENTS\DUNGEONCARVER\.godot\mono\temp\obj\Debug\ref\DungeonCarver.Godot.dll

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dujqtj30ok7rk"]
+
+[ext_resource type="Script" uid="uid://c4rljajx272s6" path="res://Scripts/DungeonCarver.cs" id="1_k43p2"]
+[ext_resource type="PackedScene" uid="uid://b8bm7jnquv3dm" path="res://tile.tscn" id="2_vehxw"]
+[ext_resource type="Texture2D" uid="uid://crrtx5if6wn2a" path="res://icon.svg" id="3_5vfew"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="DungeonCarver" type="Node3D" parent="." node_paths=PackedStringArray("mainCamera")]
+script = ExtResource("1_k43p2")
+tilePrefab = ExtResource("2_vehxw")
+wall = ExtResource("3_5vfew")
+mainCamera = NodePath("../Camera3D")
+generator = 1
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 12.5, 10)
+current = true
+fov = 169.6
