@@ -29,6 +29,12 @@ public partial class DungeonCarver : Node3D
         }
     }
 
+    [ExportToolButton("Render")]
+    public Callable Render => Callable.From(RenderMapButton);
+
+    [ExportToolButton("Clear")]
+    public Callable Clear => Callable.From(ClearButton);
+
     [Export]
     public int mapWidth = 25;
     [Export]
@@ -124,6 +130,29 @@ public partial class DungeonCarver : Node3D
     // Start is called before the first frame update
     public override void _Ready()
     {
+        RenderMap();
+    }
+
+    private void RenderMapButton()
+    {
+        foreach (Node child in GetChildren())
+        {
+            child.QueueFree();
+        }
+
+        RenderMap();
+    }
+    private void ClearButton()
+    {
+        foreach (Node child in GetChildren())
+        {
+            child.QueueFree();
+        }
+
+    }
+
+    private void RenderMap()
+    {
         GD.Print("DungeonCarver run");
         System.Random random = new System.Random(DateTime.Now.Millisecond);
         IMapGenerator<Map> mapGenerator = null;
@@ -136,7 +165,7 @@ public partial class DungeonCarver : Node3D
                     _map = Map.Create(mapGenerator);
                     break;
                 }
-            case Generators.BSPTreeMapGenerator:  
+            case Generators.BSPTreeMapGenerator:
                 {
                     GD.Print($"RMS: {roomMinSize}");
                     mapGenerator = new BSPTreeMapGenerator<Map>(mapWidth, mapHeight, maxLeafSize, minLeafSize, roomMaxSize, roomMinSize, random);
@@ -202,11 +231,6 @@ public partial class DungeonCarver : Node3D
             GD.PrintErr("Camera3D not found! Please ensure the path is correct.");
         }
 
-        RenderMap();
-    }
-
-    private void RenderMap()
-    {
         for (int x = 0; x < _map.Width; x++)
         {
             for (int y = 0; y < _map.Height; y++)
