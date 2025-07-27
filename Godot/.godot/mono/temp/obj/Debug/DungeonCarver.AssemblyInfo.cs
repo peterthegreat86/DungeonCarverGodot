@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DungeonCarver")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7825c2b920475fc226bb8d065e616bb973a081df")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2a49695a43747fb1b05e61ec651288d033c400ee")]
 [assembly: System.Reflection.AssemblyProductAttribute("DungeonCarver")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DungeonCarver")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -119,5 +119,10 @@ namespace DungeonCarver.Godot
                 _map.SetTile(xPosition, y, new Tile(Tile.Type.Empty));
             }
         }
+
+        public override string ToString()
+        {
+            return $"_width: {_width} _height: {_height} _maxLeafSize: {_maxLeafSize} _minLeafSize: {_minLeafSize} _roomMaxSize: {_roomMaxSize} _roomMinSize: {_roomMinSize}";
+        }
     }
 }

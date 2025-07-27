@@ -94,11 +94,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\peter\\source\\repos\\DungeonCarverGodot\\Godot\\DungeonCarver.csproj",
+      "projectUniqueName": "C:\\USERS\\PETER\\SOURCE\\REPOS\\DUNGEONCARVERGODOT\\GODOT\\DungeonCarver.csproj",
       "projectName": "DungeonCarver",
-      "projectPath": "C:\\Users\\peter\\source\\repos\\DungeonCarverGodot\\Godot\\DungeonCarver.csproj",
+      "projectPath": "C:\\USERS\\PETER\\SOURCE\\REPOS\\DUNGEONCARVERGODOT\\GODOT\\DungeonCarver.csproj",
       "packagesPath": "C:\\Users\\peter\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\peter\\source\\repos\\DungeonCarverGodot\\Godot\\.godot\\mono\\temp\\obj\\",
+      "outputPath": "C:\\USERS\\PETER\\SOURCE\\REPOS\\DUNGEONCARVERGODOT\\GODOT\\.godot\\mono\\temp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -165,6 +165,10 @@
           {
             "name": "Microsoft.AspNetCore.App.Ref",
             "version": "[8.0.16, 8.0.16]"
+          },
+          {
+            "name": "Microsoft.Net.Sdk.Compilers.Toolset",
+            "version": "[9.0.300, 9.0.300]"
           },
           {
             "name": "Microsoft.NETCore.App.Ref",

@@ -12,8 +12,13 @@ tilePrefab = ExtResource("2_vehxw")
 wall = ExtResource("3_5vfew")
 mainCamera = NodePath("../Camera3D")
 generator = 1
+mapWidth = 30
+maxLeafSize = 24
+minLeafSize = 10
+roomMaxSize = 15
+roomMinSize = 12
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 12.5, 10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 12.5, 10)
 current = true
 fov = 169.6

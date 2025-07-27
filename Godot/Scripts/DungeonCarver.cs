@@ -24,7 +24,8 @@ public partial class DungeonCarver : Node3D
         get => generator1;
         set
         {
-            generator1 = value; NotifyPropertyListChanged();
+            generator1 = value;
+            NotifyPropertyListChanged();
         }
     }
 
@@ -35,13 +36,22 @@ public partial class DungeonCarver : Node3D
 
     //BSP Tree Specific Var
 
-    public int maxLeafSize = 24;
+    public int maxLeafSize { get; set; } = 24;
 
-    public int minLeafSize = 10;
+    public int minLeafSize { get; set; } = 10;
 
-    public int roomMaxSize = 15;
+    public int roomMaxSize { get; set; } = 15;
 
-    public int roomMinSize = 6;
+    private int _roomMinSize = 6;
+    public int roomMinSize
+    {
+        get
+        {
+            //GD.Print($"Get {_roomMinSize}");
+            return _roomMinSize;
+        }
+        set { _roomMinSize = value; GD.Print($"Set to {value}"); }
+    }
 
     //Cave System Specific Vars
 
@@ -116,7 +126,7 @@ public partial class DungeonCarver : Node3D
     {
         GD.Print("DungeonCarver run");
         System.Random random = new System.Random(DateTime.Now.Millisecond);
-        IMapGenerator<Map> mapGenerator;
+        IMapGenerator<Map> mapGenerator = null;
 
         switch (generator)
         {
@@ -126,8 +136,9 @@ public partial class DungeonCarver : Node3D
                     _map = Map.Create(mapGenerator);
                     break;
                 }
-            case Generators.BSPTreeMapGenerator:
+            case Generators.BSPTreeMapGenerator:  
                 {
+                    GD.Print($"RMS: {roomMinSize}");
                     mapGenerator = new BSPTreeMapGenerator<Map>(mapWidth, mapHeight, maxLeafSize, minLeafSize, roomMaxSize, roomMinSize, random);
                     _map = Map.Create(mapGenerator);
                     break;
@@ -175,6 +186,8 @@ public partial class DungeonCarver : Node3D
                     break;
                 }
         }
+
+        GD.Print(mapGenerator);
 
         //Camera3D mainCamera = GetNode<Camera3D>("Path/To/Your/Camera3D"); // Replace "Path/To/Your/Camera3D" with the actual path
 

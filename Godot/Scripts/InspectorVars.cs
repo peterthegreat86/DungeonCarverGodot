@@ -88,40 +88,101 @@ namespace DungeonCarver.Godot
             p["hint_string"] = hintString; // Display name in inspector
             p["hint"] = (int)hintType;
             // Always set these flags for editor-visible, script-exposed properties
-            p["usage"] = (int)(PropertyUsageFlags.Editor | PropertyUsageFlags.ScriptVariable);
+            p["usage"] = (int)PropertyUsageFlags.Default;
             properties.Add(p);
         }
 
-        // This method is called when a property is set in the editor.
-        // We use it specifically to detect changes to 'generator' and trigger an inspector refresh.
-        public override bool _Set(StringName property, Variant value)
-        {
-            if (property == nameof(generator))
-            {
-                generator = (Generators)(int)value;
-                // Important: Call this to force the inspector to redraw its properties
-                // based on the new 'generator' value.
-                CallDeferred("property_list_changed");
-                GD.Print("NotifyPropertyListChanged");
-                return true; // Indicate that we handled the property
-            }
-            // For other properties, Godot's default _Set will handle them if they are public properties
-            // with a public setter (which they are if you use auto-properties like 'public int myProp { get; set; }').
-            // If you had private backing fields, you'd need to handle each one here.
-            return base._Set(property, value);
-        }
+        //public override bool _Set(StringName property, Variant value)
+        //{
 
-        // This method is called by the editor to get the current value of a property for display.
-        // Similar to _Set, for auto-properties, Godot's default _Get handles them.
-        // You would only need to override this if you had custom logic for retrieving values (e.g., calculated properties).
-        public override Variant _Get(StringName property)
-        {
-            // If you had private backing fields, you would explicitly return them here.
-            // Example:
-            // if (property == nameof(maxLeafSize)) return maxLeafSize;
-            // For auto-properties, base._Get often suffices.
-            return base._Get(property);
-        }
+        //    // First, check if the property being set is one of our dynamic ones
+        //    switch (property.ToString())
+        //    {
+        //        case nameof(maxLeafSize):
+        //            maxLeafSize = (int)value; return true;
+        //        case nameof(minLeafSize):
+        //            minLeafSize = (int)value; return true;
+        //        case nameof(roomMaxSize):
+        //            roomMaxSize = (int)value; return true;
+        //        case nameof(roomMinSize):
+        //            roomMinSize = (int)value; return true;
+
+        //        case nameof(neighbours):
+        //            neighbours = (int)value; return true;
+        //        case nameof(iterations):
+        //            iterations = (int)value; return true;
+        //        case nameof(closeTileProb):
+        //            closeTileProb = (int)value; return true;
+        //        case nameof(lowerLimit):
+        //            lowerLimit = (int)value; return true;
+        //        case nameof(upperLimit):
+        //            upperLimit = (int)value; return true;
+        //        case nameof(emptyNeighbours):
+        //            emptyNeighbours = (int)value; return true;
+        //        case nameof(emptyTileNeighbours):
+        //            emptyTileNeighbours = (int)value; return true;
+        //        case nameof(corridorSpace):
+        //            corridorSpace = (int)value; return true;
+        //        case nameof(corridorMaxTurns):
+        //            corridorMaxTurns = (int)value; return true;
+        //        case nameof(corridorMin):
+        //            corridorMin = (int)value; return true;
+        //        case nameof(corridorMax):
+        //            corridorMax = (int)value; return true;
+        //        case nameof(breakOut):
+        //            breakOut = (int)value; return true;
+
+        //        case nameof(fillProbability):
+        //            fillProbability = (int)value; return true;
+        //        case nameof(totalIterations):
+        //            totalIterations = (int)value; return true;
+        //        case nameof(cutoffOfBigAreaFill):
+        //            cutoffOfBigAreaFill = (int)value; return true;
+
+        //        case nameof(maxCityLeafSize):
+        //            maxCityLeafSize = (int)value; return true;
+        //        case nameof(minCityLeafSize):
+        //            minCityLeafSize = (int)value; return true;
+        //        case nameof(roomMaxCitySize):
+        //            roomMaxCitySize = (int)value; return true;
+        //        case nameof(roomMinCitySize):
+        //            roomMinCitySize = (int)value; return true;
+
+        //        case nameof(percentGoal):
+        //            percentGoal = (float)value; return true;
+        //        case nameof(walkIterations):
+        //            walkIterations = (int)value; return true;
+        //        case nameof(weightedTowardCenter):
+        //            weightedTowardCenter = (float)value; return true;
+        //        case nameof(weightedTowardPreviousDirection):
+        //            weightedTowardPreviousDirection = (float)value; return true;
+
+        //        case nameof(magicNumber):
+        //            magicNumber = (int)value; return true;
+
+        //        case nameof(maxTunnelingRooms):
+        //            maxTunnelingRooms = (int)value; return true;
+        //        case nameof(roomMaxTunnelingSize):
+        //            roomMaxTunnelingSize = (int)value; return true;
+        //        case nameof(roomMinTunnelingSize):
+        //            roomMinTunnelingSize = (int)value; return true;
+        //    }
+
+        //    // Let the base class handle all other properties (especially the [Export]ed ones)
+        //    return base._Set(property, value);
+        //}
+
+        //// This method is called by the editor to get the current value of a property for display.
+        //// Similar to _Set, for auto-properties, Godot's default _Get handles them.
+        //// You would only need to override this if you had custom logic for retrieving values (e.g., calculated properties).
+        //public override Variant _Get(StringName property)
+        //{
+        //    // If you had private backing fields, you would explicitly return them here.
+        //    // Example:
+        //    // if (property == nameof(maxLeafSize)) return maxLeafSize;
+        //    // For auto-properties, base._Get often suffices.
+        //    return base._Get(property);
+        //}
 
 
         // --- Optional: Add a button to generate the map ---
