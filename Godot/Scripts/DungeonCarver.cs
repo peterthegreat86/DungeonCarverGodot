@@ -42,9 +42,9 @@ public partial class DungeonCarver : Node3D
 
     //BSP Tree Specific Var
 
-    public int maxLeafSize { get; set; } = 24;
+    public int leafMaxSize { get; set; } = 24;
 
-    public int minLeafSize { get; set; } = 10;
+    public int leafMinSize { get; set; } = 10;
 
     public int roomMaxSize { get; set; } = 15;
 
@@ -161,74 +161,262 @@ public partial class DungeonCarver : Node3D
         {
             case Generators.BorderOnlyMapGenerator:
                 {
+                    if (mapWidth <= 0 || mapHeight <= 0)
+                    {
+                        GD.PrintErr("BorderOnlyMapGenerator: Map dimensions must be positive.");
+                        return;
+                    }
                     mapGenerator = new BorderOnlyMapGenerator<Map>(mapWidth, mapHeight);
                     _map = Map.Create(mapGenerator);
                     break;
                 }
             case Generators.BSPTreeMapGenerator:
                 {
-                    GD.Print($"RMS: {roomMinSize}");
-                    mapGenerator = new BSPTreeMapGenerator<Map>(mapWidth, mapHeight, maxLeafSize, minLeafSize, roomMaxSize, roomMinSize, random);
+                    if (leafMinSize <= 0 || leafMaxSize <= 0 || roomMinSize <= 0 || roomMaxSize <= 0)
+                    {
+                        GD.PrintErr("BSPTreeMapGenerator: All size parameters must be positive.");
+                        return;
+                    }
+                    if (leafMinSize > leafMaxSize)
+                    {
+                        GD.PrintErr("BSPTreeMapGenerator: Leaf Minimum Size cannot be greater than Leaf Maximum Size.");
+                        return;
+                    }
+                    if (roomMinSize > roomMaxSize)
+                    {
+                        GD.PrintErr("BSPTreeMapGenerator: Room Minimum Size cannot be greater than Room Maximum Size.");
+                        return;
+                    }
+                    if (leafMinSize < roomMaxSize)
+                    {
+                        GD.PrintErr("BSPTreeMapGenerator: Leaf Minimum Size is less than Room Maximum Size. Rooms might not fit.");
+                        return;
+                    }
+                    if (mapWidth < leafMaxSize || mapHeight < leafMaxSize)
+                    {
+                        GD.PrintErr("BSPTreeMapGenerator: Map size is smaller than Leaf Maximum Size.");
+                        return;
+                    }
+
+                    mapGenerator = new BSPTreeMapGenerator<Map>(mapWidth, mapHeight, leafMaxSize, leafMinSize, roomMaxSize, roomMinSize, random);
                     _map = Map.Create(mapGenerator);
                     break;
                 }
             case Generators.CaveMapGenerator:
                 {
+                    if (mapWidth <= 0 || mapHeight <= 0)
+                    {
+                        GD.PrintErr("CaveMapGenerator: Map dimensions must be positive.");
+                        return;
+                    }
+                    if (neighbours <= 0)
+                    {
+                        GD.PrintErr("CaveMapGenerator: Neighbours count must be positive.");
+                        return;
+                    }
+                    if (iterations <= 0)
+                    {
+                        GD.PrintErr("CaveMapGenerator: Iterations count must be positive.");
+                        return;
+                    }
+                    if (closeTileProb < 0 || closeTileProb > 100)
+                    {
+                        GD.PrintErr("CaveMapGenerator: Close Tile Probability must be between 0 and 100.");
+                        return;
+                    }
+                    if (lowerLimit <= 0 || upperLimit <= 0)
+                    {
+                        GD.PrintErr("CaveMapGenerator: Limits must be positive.");
+                        return;
+                    }
+                    if (lowerLimit > upperLimit)
+                    {
+                        GD.PrintErr("CaveMapGenerator: Lower Limit cannot be greater than Upper Limit.");
+                        return;
+                    }
+                    if (corridorSpace < 0 || corridorMaxTurns < 0 || corridorMin < 0 || corridorMax < 0)
+                    {
+                        GD.PrintErr("CaveMapGenerator: Corridor parameters cannot be negative.");
+                        return;
+                    }
+                    if (corridorMin > corridorMax)
+                    {
+                        GD.PrintErr("CaveMapGenerator: Corridor Minimum length cannot be greater than Corridor Maximum length.");
+                        return;
+                    }
+
                     mapGenerator = new CaveMapGenerator<Map>(mapWidth, mapHeight, neighbours, iterations, closeTileProb, lowerLimit, upperLimit, emptyNeighbours, emptyTileNeighbours, corridorSpace, corridorMaxTurns, corridorMin, corridorMax, breakOut, random);
                     _map = Map.Create(mapGenerator);
                     break;
                 }
             case Generators.CellularAutomataMapGenerator:
                 {
+                    if (mapWidth <= 0 || mapHeight <= 0)
+                    {
+                        GD.PrintErr("CellularAutomataMapGenerator: Map dimensions must be positive.");
+                        return;
+                    }
+                    if (fillProbability < 0 || fillProbability > 100)
+                    {
+                        GD.PrintErr("CellularAutomataMapGenerator: Fill Probability must be between 0 and 100.");
+                        return;
+                    }
+                    if (totalIterations <= 0)
+                    {
+                        GD.PrintErr("CellularAutomataMapGenerator: Iterations count must be positive.");
+                        return;
+                    }
+                    if (cutoffOfBigAreaFill < 0)
+                    {
+                        GD.PrintErr("CellularAutomataMapGenerator: Cutoff cannot be negative.");
+                        return;
+                    }
+
                     mapGenerator = new CellularAutomataMapGenerator<Map>(mapWidth, mapHeight, fillProbability, totalIterations, cutoffOfBigAreaFill, random);
                     _map = Map.Create(mapGenerator);
                     break;
                 }
             case Generators.CityMapGenerator:
                 {
+                    if (mapWidth <= 0 || mapHeight <= 0)
+                    {
+                        GD.PrintErr("CityMapGenerator: Map dimensions must be positive.");
+                        return;
+                    }
+                    if (minCityLeafSize <= 0 || maxCityLeafSize <= 0 || roomMinCitySize <= 0 || roomMaxCitySize <= 0)
+                    {
+                        GD.PrintErr("CityMapGenerator: All size parameters must be positive.");
+                        return;
+                    }
+                    if (minCityLeafSize > maxCityLeafSize)
+                    {
+                        GD.PrintErr("CityMapGenerator: Minimum Leaf Size cannot be greater than Maximum Leaf Size.");
+                        return;
+                    }
+                    if (roomMinCitySize > roomMaxCitySize)
+                    {
+                        GD.PrintErr("CityMapGenerator: Room Minimum Size cannot be greater than Room Maximum Size.");
+                        return;
+                    }
+                    if (minCityLeafSize < roomMaxCitySize)
+                    {
+                        GD.PrintErr("CityMapGenerator: Minimum Leaf Size is less than Room Maximum Size. Rooms might not fit.");
+                        return;
+                    }
                     mapGenerator = new CityMapGenerator<Map>(mapWidth, mapHeight, maxCityLeafSize, minCityLeafSize, roomMaxCitySize, roomMinCitySize, random);
                     _map = Map.Create(mapGenerator);
                     break;
                 }
             case Generators.DFSMazeMapGenerator:
                 {
+                    if (mapWidth <= 0 || mapHeight <= 0)
+                    {
+                        GD.PrintErr("DFSMazeMapGenerator: Map dimensions must be positive.");
+                        return;
+                    }
+                    if (mapWidth % 2 == 0 || mapHeight % 2 == 0)
+                    {
+                        GD.PrintErr("DFSMazeMapGenerator: Odd map dimensions are recommended for maze generation.");
+                    }
                     mapGenerator = new DFSMazeMapGenerator<Map>(mapWidth, mapHeight, random);
                     _map = Map.Create(mapGenerator);
                     break;
                 }
             case Generators.DrunkardsWalkMapGenerator:
                 {
+                    if (mapWidth <= 0 || mapHeight <= 0)
+                    {
+                        GD.PrintErr("DrunkardsWalkMapGenerator: Map dimensions must be positive.");
+                        return;
+                    }
+                    if (percentGoal <= 0.0f || percentGoal > 1.0f)
+                    {
+                        GD.PrintErr("DrunkardsWalkMapGenerator: Percent Goal must be between 0 (exclusive) and 1 (inclusive).");
+                        return;
+                    }
+                    if (walkIterations <= 0)
+                    {
+                        GD.PrintErr("DrunkardsWalkMapGenerator: Walk Iterations count must be positive.");
+                        return;
+                    }
+                    if (weightedTowardCenter < 0.0f || weightedTowardCenter > 1.0f)
+                    {
+                        GD.PrintErr("DrunkardsWalkMapGenerator: Center Weight must be between 0 and 1.");
+                        return;
+                    }
+                    if (weightedTowardPreviousDirection < 0.0f || weightedTowardPreviousDirection > 1.0f)
+                    {
+                        GD.PrintErr("DrunkardsWalkMapGenerator: Previous Direction Weight must be between 0 and 1.");
+                        return;
+                    }
+                    if (weightedTowardCenter + weightedTowardPreviousDirection > 1.0f)
+                    {
+                        GD.PrintErr("DrunkardsWalkMapGenerator: The sum of weights cannot be greater than 1.0.");
+                        return;
+                    }
                     mapGenerator = new DrunkardsWalkMapGenerator<Map>(mapWidth, mapHeight, percentGoal, walkIterations, weightedTowardCenter, weightedTowardPreviousDirection, random);
                     _map = Map.Create(mapGenerator);
                     break;
                 }
             case Generators.TunnelingMazeMapGenerator:
                 {
+                    if (mapWidth <= 0 || mapHeight <= 0)
+                    {
+                        GD.PrintErr("TunnelingMazeMapGenerator: Map dimensions must be positive.");
+                        return;
+                    }
+                    if (magicNumber <= 0)
+                    {
+                        GD.PrintErr("TunnelingMazeMapGenerator: Magic Number must be positive.");
+                        return;
+                    }
                     mapGenerator = new TunnelingMazeMapGenerator<Map>(mapWidth, mapHeight, magicNumber, random);
                     _map = Map.Create(mapGenerator);
                     break;
                 }
             case Generators.TunnelingWithRoomsMapGenerator:
                 {
+                    if (mapWidth <= 0 || mapHeight <= 0)
+                    {
+                        GD.PrintErr("TunnelingWithRoomsMapGenerator: Map dimensions must be positive.");
+                        return;
+                    }
+                    if (maxTunnelingRooms <= 0)
+                    {
+                        GD.PrintErr("TunnelingWithRoomsMapGenerator: Maximum Rooms count must be positive.");
+                        return;
+                    }
+                    if (roomMinTunnelingSize <= 0 || roomMaxTunnelingSize <= 0)
+                    {
+                        GD.PrintErr("TunnelingWithRoomsMapGenerator: Room sizes must be positive.");
+                        return;
+                    }
+                    if (roomMinTunnelingSize > roomMaxTunnelingSize)
+                    {
+                        GD.PrintErr("TunnelingWithRoomsMapGenerator: Room Minimum Size cannot be greater than Room Maximum Size.");
+                        return;
+                    }
                     mapGenerator = new TunnelingWithRoomsMapGenerator<Map>(mapWidth, mapHeight, maxTunnelingRooms, roomMaxTunnelingSize, roomMinTunnelingSize, random);
                     _map = Map.Create(mapGenerator);
                     break;
                 }
+            default:
+                {
+                    GD.PrintErr("Unknown map generator selected.");
+                    return;
+                }
         }
 
-        GD.Print(mapGenerator);
-
-        //Camera3D mainCamera = GetNode<Camera3D>("Path/To/Your/Camera3D"); // Replace "Path/To/Your/Camera3D" with the actual path
-
-        //Camera.main.transform.localPosition = new Vector3(_map.Width / 2, _map.Height / 2, -10);
+        //GD.Print(mapGenerator);
 
         if (mainCamera != null)
         {
-            mainCamera.Position = new Vector3(_map.Width / 2.0f, _map.Height / 2.0f, 10.0f); // Note: Z-axis is typically positive for camera depth in Godot's 3D space relative to the scene.
+            mainCamera.Position = new Vector3(_map.Width / 2.0f, _map.Height / 2.0f, 10.0f);
         }
         else
         {
-            GD.PrintErr("Camera3D not found! Please ensure the path is correct.");
+            GD.PrintErr("Camera3D not assigned in the editor.");
+            return;
         }
 
         for (int x = 0; x < _map.Width; x++)
@@ -239,7 +427,13 @@ public partial class DungeonCarver : Node3D
                 newTile.Position = new Vector3(x, y, 0);
                 AddChild(newTile);
 
-                Sprite3D tileSprite = newTile.GetNodeOrNull<Sprite3D>("Sprite3D"); //This is null
+                Sprite3D tileSprite = newTile.GetNodeOrNull<Sprite3D>("Sprite3D");
+
+                if (tileSprite == null)
+                {
+                    GD.PrintErr($"Tile prefab is missing a 'Sprite3D' node at position ({x},{y}).");
+                    continue;
+                }
 
                 switch (_map.GetTile(x, y).type)
                 {
@@ -249,11 +443,27 @@ public partial class DungeonCarver : Node3D
                             {
                                 tileSprite.Texture = wall;
                             }
+                            else
+                            {
+                                GD.PrintErr("Wall texture is not assigned.");
+                            }
                             break;
                         }
                     case Tile.Type.Empty:
                         {
-                            tileSprite.Texture = empty;
+                            if (empty != null)
+                            {
+                                tileSprite.Texture = empty;
+                            }
+                            else
+                            {
+                                //GD.PrintErr("Empty texture is not assigned.");
+                            }
+                            break;
+                        }
+                    default:
+                        {
+                            GD.PrintErr($"Unhandled tile type: {_map.GetTile(x, y).type} found at ({x},{y}).");
                             break;
                         }
                 }

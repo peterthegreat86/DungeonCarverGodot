@@ -30,8 +30,8 @@ namespace DungeonCarver.Godot
             switch (generator)
             {
                 case Generators.BSPTreeMapGenerator:
-                    AddProperty(properties, nameof(maxLeafSize), Variant.Type.Int, "Max Leaf Size:", PropertyHint.None);
-                    AddProperty(properties, nameof(minLeafSize), Variant.Type.Int, "Min Leaf Size:", PropertyHint.None);
+                    AddProperty(properties, nameof(leafMaxSize), Variant.Type.Int, "Max Leaf Size:", PropertyHint.None);
+                    AddProperty(properties, nameof(leafMinSize), Variant.Type.Int, "Min Leaf Size:", PropertyHint.None);
                     AddProperty(properties, nameof(roomMaxSize), Variant.Type.Int, "Room Max Size:", PropertyHint.None);
                     AddProperty(properties, nameof(roomMinSize), Variant.Type.Int, "Room Min Size:", PropertyHint.None);
                     break;
